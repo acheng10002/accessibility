@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accessibility</title>
+  </head>
+  <body>
+    <!-- Example 1: Where's "here"? -->
+    <a href="...">Click here</a> to start your career in web development!
+
+    <!-- Example 2: I love that place! -->
+    Visit <a href="...">The Odin Project</a> to start your career in web
+    development!
+
+    <!-- Example 1: Now the user is aware that this link will open or download a PDF file. -->
+    <a href="...">2021 Sign Up Statistics (PDF, 1MB)</a>
+
+    <!-- Example 2: And now the user knows this link opens in a new tab! -->
+    <a href="...">GitHub (opens in new tab)</a>
+    <br />
+
+    <!-- Example 1: Huh? -->
+    <div class="input-error">Error: Invalid input.</div>
+
+    <!-- Example 2: That makes more sense. -->
+    <div class="input-error">Error: Email is invalid.</div>
+
+    <!-- Example 3: Even better! -->
+    <div class="input-error">
+      Error: 'JohnSmith@@test.com' is not valid. Example of a valid email:
+      example@yourdomain.com.
+    </div>
+    <br />
+
+    <!-- Example 1 -->
+    <img src="..." alt="" />
+
+    <!-- Example 2 -->
+    <img src="..." alt="Odin" />
+    <br />
+
+    <!-- when and how I should add alt text for images based on the function of the
+    image and the context surrounding it 
+    when an image is used only for decorative purposes, best to remove the image 
+    from the page content and instead define it as a CSS background image -->
+
+    <div>Not in the tab order</div>
+    <!-- below, div is now programmatically focusable, so I can call focus() method -->
+    <div tabindex="0">In the tab order</div>
+    <!-- tabindex="-1" useful for when I need to manage focus 
+     I can use it to temporarily disable a custom interactive control -->
+    <div tabindex="-1">Not in the tab order but is focusable</div>
+    <!-- tabindex > 0 will be on top of the tab order 
+         generally won't want to use a tab order > 0 -->
+    <div tabindex="5">Ahead of everything in the tab order</div>
+    <button>Totes focusable</button>
+    <br />
+
+    <!-- tab order is nonsensical here -->
+    <button style="float: right">I should</button>
+    <button>Be Focused</button>
+    <button>Last!</button>
+    <br />
+
+    <div>
+      <!-- native controls, input, select, button, are implicitly added to the tab order and are
+    implicitable focusable -->
+      <label>
+        <input type="text" />
+        Address
+      </label>
+      <label>
+        <input type="tel" />
+        Phone
+      </label>
+      <select>
+        <option value="work">Work</option>
+        <option value="cell">Cell</option>
+        <option value="home">Home</option>
+      </select>
+    </div>
+    <br />
+
+    <!-- use div and span as generic containers exes. for layouts or for generic text 
+     below is non-semantic HTML -->
+    <div class="button-container">
+      <div class="rock">Rock</div>
+      <div class="paper">Paper</div>
+      <div class="scissors">Scissors</div>
+    </div>
+    <br />
+
+    <!-- below is semantic HTML -->
+    <div class="button-container">
+      <button class="rock">Rock</button>
+      <button class="paper">Paper</button>
+      <button class="scissors">Scissors</button>
+    </div>
+    <br />
+
+    <!-- use table element and related elements for tabular data -->
+    <!-- when I need the input itself to have an id -->
+    <label for="name"></label>
+    <input type="text" id="name" />
+    <!-- use ol, ul, or dl and their related items for lists -->
+    <label>
+      <input type="text" />
+    </label>
+
+    <!-- landmarks - HTML elements that act as regions of a page -->
+    <nav></nav>
+    <main>
+      <header></header>
+      <section></section>
+      <form></form>
+      <aside></aside>
+      <br />
+
+      <table>
+        <caption>
+          Average daily tea and coffee consumption
+        </caption>
+        <tr>
+          <th>Person</th>
+          <th>Coffee</th>
+          <th>Tea</th>
+        </tr>
+        <tr>
+          <th>Njoki</th>
+          <td>5 cups</td>
+          <td>0 cups</td>
+        </tr>
+        <tr>
+          <th>Iesha</th>
+          <td>1 cup</td>
+          <td>2 cups</td>
+        </tr>
+        <tr>
+          <th>Léonie</th>
+          <td>0 cups</td>
+          <td>25 cups</td>
+        </tr>
+      </table>
+      <br />
+
+      <!-- The `tabindex` attribute makes the `<div>` elements focusable. 
+        or just use button tags 
+        if I ever need to use an element that isn't focusable or doesn't 
+        have any event handling by default, then I need to add both of the
+        functionalities in manually  -->
+      <div class="button-container">
+        <div class="rock button2" tabindex="0">Rock</div>
+        <div class="paper button2" tabindex="0">Paper</div>
+        <div class="scissors button2" tabindex="0">Scissors</div>
+      </div>
+      <br />
+
+      <!-- This element is first in the tab order. -->
+      <div tabindex="0">This is the first element listed in the HTML.</div>
+
+      <!-- This element is second in the tab order. -->
+      <div tabindex="0">This is the second element listed in the HTML.</div>
+      <br />
+
+      <!-- aria-label overrides any native labelof an element and modifies its name property 
+       in the accessibility tree; best when the element doesn't already have a native label
+       aria-labels do not have any effect on divs and spans -->
+      <button type="button" aria-label="Close menu">X</button>
+
+      <!-- another way to use aria-label is on landmark elements 
+       do not use aria-label to change how a word is phonetically announced -->
+      <nav aria-label="main navigation">...</nav>
+      <br />
+
+      <!-- Here's the labelling element -->
+      <h2 id="label">Shirts</h2>
+
+      <!-- And here's the labelled element. Note the order of the ID references passed in 
+       aria-labelledby overrides native label and aria-label attribute 
+       aria-labelledby changes an element's accessible name to a concatenated string of 
+       text contents or alt attributes of the labelling elements 
+       I can pass in any number of id references, and I can have an element reference itself 
+       this HTML would be announced by a screen reader as, "Shirts, shop now, button"
+       it provides additional context and makes the page more understandable -->
+      <button type="button" id="shop-btn" aria-labelledby="label shop-btn">
+        Shop Now
+      </button>
+      <br />
+      <!-- even if a labeling element is visually hidden, either by the hidden HTML attribute
+      or with CSS, it will still modify the accessible name of the labeled element
+      aria-labelled by doesn't have have the same event handling as label, 
+      it needs to be added vis JS
+      Clicking the <label> element gives focus to the input element -->
+      <label for="name">Name:</label>
+      <input id="name" type="text" />
+
+      <!-- Clicking the <div> element won't give focus to the input element -->
+      <div id="label">Name:</div>
+      <input type="text" aria-labelledby="label" />
+      <br />
+
+      <!-- aria-describedby attribute modifies the description property 
+       pass in the id values of other elements as the aria-describedby value, 
+       and the elements whose id value are passed in can also be visually hidden 
+       when input receives focus, screen reader will announce
+       "Password, edit protected, password must be at least twn characters long"-->
+      <label
+        >Password:
+        <input type="password" aria-describedby="password-requirements" />
+      </label>
+
+      <!-- Meaningful text + ARIA! -->
+      <span id="password-requirements"
+        >Password must be at least 10 characters long.</span
+      >
+
+      <!-- with aria--hidden, the element will remain visible to sighted users -->
+      <!-- Example 1 -->
+      <button type="button">
+        <span class="material-icons">add</span>
+        Add Book
+      </button>
+
+      <!-- Example 2 hids the span from the accessibility tree so its text content
+      isn't added to the button's accesible name 
+      when an element gets aria-hidden="true", all children of that element also
+      become hidden to the acessibility tree 
+      do not give an element aria-hidden="true" if it's focusable 
+      nothing will be announced when the element receives focus -->
+      <button type="button">
+        <span class="material-icons" aria-hidden="true">add</span>
+        Add Book
+      </button>
+    </main>
+    <footer></footer>
+  </body>
+
+  <script src="script.js"></script>
+</html>
